@@ -1,0 +1,25 @@
+# environment.yml
+name: vitpose-distill
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pytorch=2.2
+  - torchvision
+  - numpy<2
+  - scipy
+  - matplotlib
+  - pandas
+  - tqdm
+  - pillow
+  - pip
+  - pip:
+    - timm==0.9.12
+    - einops
+    - tensorboard
+    - transformers
+    - albumentations
+    - pycocotools
+    - "numpy<2"
