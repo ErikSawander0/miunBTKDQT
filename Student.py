@@ -2,7 +2,7 @@
 file: ./Student.py
 Helper class, creates students
 """
-from transformers import VitPoseForPoseEstimation, VitPoseConfig, VitPoseBackboneConfig, AutoImageProcessor
+from transformers import VitPoseForPoseEstimation, VitPoseConfig, VitPoseBackboneConfig
 
 # we want to set this up so that it can clone weights at specific depths...
 def createStudent(depth, layer_mapping, teacher_sd ): 
