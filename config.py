@@ -26,8 +26,8 @@ class TrainConfig:
     
     # training hyperparams
     lr: float = 2e-4
-    alpha: float = 1.0      # output distillation weight
-    beta: float = 0.5       # feature distillation weight
+    alpha: float = 0.9      # output distillation weight
+    beta: float = 0.1       # feature distillation weight
     batch_size: int = 64
     epochs: int = 50
     seed: int = 42
