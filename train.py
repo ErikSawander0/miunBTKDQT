@@ -42,12 +42,13 @@ def log_metrics(path: str, metrics: dict):
         f.write(json.dumps(metrics) + '\n')
 
 
-def save_checkpoint(path: str, epoch: int, model, optimizer, best_val_loss: float):
+def save_checkpoint(path: str, epoch: int, model, optimizer, best_val_loss: float, scheduler):
     """Save training checkpoint."""
     torch.save({
         'epoch': epoch,
         'model_state_dict': model.state_dict(),
         'optimizer_state_dict': optimizer.state_dict(),
+        'scheduler_state_dict': scheduler.state_dict(),
         'best_val_loss': best_val_loss,
     }, path)
 
@@ -108,9 +109,9 @@ def train_one_epoch(
 
         optimizer.zero_grad()
         loss.backward()
-        
+
         grad_norm = torch.nn.utils.clip_grad_norm_(student.parameters(), max_norm=float('inf'))
-        
+
         optimizer.step()
 
         total_task += l_task.item()
@@ -193,12 +194,12 @@ def validate(
 
 def train(config: TrainConfig, resume: bool = False):
     """Main training loop."""
-    
+
     os.makedirs(config.run_dir, exist_ok=True)
     os.makedirs(config.checkpoint_dir, exist_ok=True)
-    
+
     config.save()
-    
+
     if torch.cuda.is_available():
         device = torch.device("cuda")
     elif torch.backends.mps.is_available():
@@ -206,9 +207,9 @@ def train(config: TrainConfig, resume: bool = False):
     else:
         device = torch.device("cpu")
     print(f"Using device: {device}")
-    
+
     set_seed(config.seed)
-    
+
     print("Loading data...")
     train_loader = build_train_dataloader(
         data_root=config.train_data_root,
@@ -222,48 +223,58 @@ def train(config: TrainConfig, resume: bool = False):
         batch_size=config.batch_size,
         num_workers=4,
     )
-    
+
     print("Loading teacher...")
     teacher = VitPoseForPoseEstimation.from_pretrained("usyd-community/vitpose-base-simple")
     teacher = teacher.to(device)  # type: ignore
     teacher.eval()
     for p in teacher.parameters():
         p.requires_grad = False
-    
+
     # Student
     print(f"Creating student (depth={config.depth})...")
     student = createStudent(config.depth, config.layer_mapping, teacher.state_dict())
     student = student.to(device)  # type: ignore
-    
+
     teacher_layers = list(config.layer_mapping.values())
     student_layers = list(config.layer_mapping.keys())
     teacher_extractor = FeatureExtractor(teacher, teacher_layers)
     student_extractor = FeatureExtractor(student, student_layers)
-    
+
     optimizer = optim.AdamW(student.parameters(), lr=config.lr)
-    
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer,
+        mode='min',
+        factor=0.5,
+        patience=5,
+        min_lr=1e-6
+    )
+
     start_epoch = 0
     best_val_loss = float('inf')
-    
+
     if resume:
         latest_ckpt = Path(config.checkpoint_dir) / 'latest.pt'
         if latest_ckpt.exists():
+            ckpt = torch.load(str(latest_ckpt))
             print(f"Resuming from {latest_ckpt}...")
             start_epoch, best_val_loss = load_checkpoint(str(latest_ckpt), student, optimizer)
-            start_epoch += 1  
+            if 'scheduler_state_dict' in ckpt:
+                scheduler.load_state_dict(ckpt['scheduler_state_dict'])
+            start_epoch += 1
             print(f"Resuming from epoch {start_epoch}, best_val_loss={best_val_loss:.4f}")
-    
+
     print(f"\nStarting training for {config.epochs} epochs...")
     print(f"Logging to: {config.metrics_file}")
     print(f"Checkpoints: {config.checkpoint_dir}")
-    
+
     for epoch in range(start_epoch, config.epochs):
         epoch_start = time.time()
-        
+
         print(f"\n{'='*60}")
         print(f"Epoch {epoch + 1}/{config.epochs}")
         print(f"{'='*60}")
-        
+
         train_metrics = train_one_epoch(
             teacher=teacher,
             student=student,
@@ -276,7 +287,7 @@ def train(config: TrainConfig, resume: bool = False):
             alpha=config.alpha,
             beta=config.beta,
         )
-        
+
         val_metrics = validate(
             teacher=teacher,
             student=student,
@@ -288,23 +299,25 @@ def train(config: TrainConfig, resume: bool = False):
             alpha=config.alpha,
             beta=config.beta,
         )
-        
+        scheduler.step(val_metrics['val_loss'])
+
+        current_lr = optimizer.param_groups[0]['lr']
         epoch_time = time.time() - epoch_start
-        
+
         is_best = val_metrics['val_loss'] < best_val_loss
         if is_best:
             best_val_loss = val_metrics['val_loss']
-        
+
         metrics = {
             'epoch': epoch + 1,
-            'lr': config.lr,
+            'lr': current_lr,
             **train_metrics,
             **val_metrics,
             'best_val_loss': best_val_loss,
             'epoch_time_seconds': epoch_time,
         }
         log_metrics(config.metrics_file, metrics)
-        
+
         print(f"Train - loss: {train_metrics['train_loss']:.4f}, "
               f"task: {train_metrics['train_task_loss']:.4f}, "
               f"distill: {train_metrics['train_distill_loss']:.4f}, "
@@ -313,30 +326,30 @@ def train(config: TrainConfig, resume: bool = False):
               f"task: {val_metrics['val_task_loss']:.4f}, "
               f"distill: {val_metrics['val_distill_loss']:.4f}, "
               f"feature: {val_metrics['val_feature_loss']:.4f}")
-        print(f"Time: {epoch_time:.1f}s | Best val loss: {best_val_loss:.4f}" + 
+        print(f"Time: {epoch_time:.1f}s | Best val loss: {best_val_loss:.4f}" +
               (" *" if is_best else ""))
-        
+
         # Checkpointing
         save_checkpoint(
             f"{config.checkpoint_dir}/latest.pt",
-            epoch, student, optimizer, best_val_loss
+            epoch, student, optimizer, best_val_loss, scheduler
         )
-        
+
         if is_best:
             save_checkpoint(
                 f"{config.checkpoint_dir}/best.pt",
-                epoch, student, optimizer, best_val_loss
+                epoch, student, optimizer, best_val_loss, scheduler
             )
-        
+
         if (epoch + 1) % config.checkpoint_every == 0:
             save_checkpoint(
                 f"{config.checkpoint_dir}/epoch_{epoch + 1}.pt",
-                epoch, student, optimizer, best_val_loss
+                epoch, student, optimizer, best_val_loss,  scheduler
             )
-    
+
     teacher_extractor.remove()
     student_extractor.remove()
-    
+
     print(f"\nTraining complete! Best val loss: {best_val_loss:.4f}")
     print(f"Results saved to: {config.run_dir}")
 
@@ -346,7 +359,7 @@ def main():
     parser.add_argument('config', type=str, help='Path to config JSON file')
     parser.add_argument('--resume', action='store_true', help='Resume from latest checkpoint')
     args = parser.parse_args()
-    
+
     config = TrainConfig.load(args.config)
     train(config, resume=args.resume)
 
