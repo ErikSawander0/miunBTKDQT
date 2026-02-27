@@ -1,0 +1,504 @@
+{
+  "depth10_to_depth8": {
+    "deeper_depth": 10,
+    "shallower_depth": 8,
+    "target_size_mb": 57.348697662353516,
+    "target_size_bytes": 60134468.0,
+    "target_ap": 0.7328417159997028,
+    "target_bops": 25553.176363008,
+    "config": {
+      "0": 8,
+      "1": 4,
+      "2": 8,
+      "3": 8,
+      "4": 8,
+      "5": 8,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 8
+    },
+    "config_str": "[8,4,8,8,8,8,4,4,4,8]",
+    "actual_size_mb": 57.284244537353516,
+    "actual_size_bytes": 60066884.0,
+    "actual_bops_gbops": 25669.14048,
+    "is_pareto_improvement": false,
+    "ap_delta": -0.08332520375589292,
+    "allocation_log": [
+      {
+        "step": 0,
+        "action": "start (all INT8)",
+        "layer_bits": {
+          "0": 8,
+          "1": 8,
+          "2": 8,
+          "3": 8,
+          "4": 8,
+          "5": 8,
+          "6": 8,
+          "7": 8,
+          "8": 8,
+          "9": 8
+        },
+        "size_bytes": 74225732.0,
+        "size_mb": 70.78717422485352,
+        "estimated_ap_cost": 0.0
+      },
+      {
+        "step": 1,
+        "action": "layer 8: INT8 -> INT4",
+        "layer_demoted": 8,
+        "ap_cost_individual": 0.014185931903844318,
+        "estimated_total_ap_cost": 0.014185931903844318,
+        "bytes_saved": 3539712.0,
+        "efficiency": 4.007651442785265e-09,
+        "layer_bits": {
+          "0": 8,
+          "1": 8,
+          "2": 8,
+          "3": 8,
+          "4": 8,
+          "5": 8,
+          "6": 8,
+          "7": 8,
+          "8": 4,
+          "9": 8
+        },
+        "size_bytes": 70686020.0,
+        "size_mb": 67.41144180297852
+      },
+      {
+        "step": 2,
+        "action": "layer 6: INT8 -> INT4",
+        "layer_demoted": 6,
+        "ap_cost_individual": 0.015570796483440064,
+        "estimated_total_ap_cost": 0.02975672838728438,
+        "bytes_saved": 3539712.0,
+        "efficiency": 4.398887955698109e-09,
+        "layer_bits": {
+          "0": 8,
+          "1": 8,
+          "2": 8,
+          "3": 8,
+          "4": 8,
+          "5": 8,
+          "6": 4,
+          "7": 8,
+          "8": 4,
+          "9": 8
+        },
+        "size_bytes": 67146308.0,
+        "size_mb": 64.03570938110352
+      },
+      {
+        "step": 3,
+        "action": "layer 7: INT8 -> INT4",
+        "layer_demoted": 7,
+        "ap_cost_individual": 0.01666779861560974,
+        "estimated_total_ap_cost": 0.04642452700289412,
+        "bytes_saved": 3539712.0,
+        "efficiency": 4.708800776902116e-09,
+        "layer_bits": {
+          "0": 8,
+          "1": 8,
+          "2": 8,
+          "3": 8,
+          "4": 8,
+          "5": 8,
+          "6": 4,
+          "7": 4,
+          "8": 4,
+          "9": 8
+        },
+        "size_bytes": 63606596.0,
+        "size_mb": 60.659976959228516
+      },
+      {
+        "step": 4,
+        "action": "layer 1: INT8 -> INT4",
+        "layer_demoted": 1,
+        "ap_cost_individual": 0.01721832374844534,
+        "estimated_total_ap_cost": 0.06364285075133946,
+        "bytes_saved": 3539712.0,
+        "efficiency": 4.864329004293384e-09,
+        "layer_bits": {
+          "0": 8,
+          "1": 4,
+          "2": 8,
+          "3": 8,
+          "4": 8,
+          "5": 8,
+          "6": 4,
+          "7": 4,
+          "8": 4,
+          "9": 8
+        },
+        "size_bytes": 60066884.0,
+        "size_mb": 57.284244537353516
+      }
+    ],
+    "metrics": {
+      "AP": 0.6495165122438099,
+      "AP50": 0.8927998484950517,
+      "AP75": 0.7326220603337487,
+      "APM": 0.6270701345716335,
+      "APL": 0.6877220980807708,
+      "AR": 0.6900188916876574,
+      "AR50": 0.9093198992443325,
+      "AR75": 0.7618073047858942,
+      "ARM": 0.6579623053810435,
+      "ARL": 0.7376811594202899
+    },
+    "eval_time_seconds": 36.3
+  },
+  "depth8_to_depth6": {
+    "deeper_depth": 8,
+    "shallower_depth": 6,
+    "target_size_mb": 43.829654693603516,
+    "target_size_bytes": 45958724.0,
+    "target_ap": 0.7060735226232826,
+    "target_bops": 24741.427544064,
+    "config": {
+      "0": 8,
+      "1": 4,
+      "2": 8,
+      "3": 8,
+      "4": 8,
+      "5": 4,
+      "6": 4,
+      "7": 4
+    },
+    "config_str": "[8,4,8,8,8,4,4,4]",
+    "actual_size_mb": 43.781314849853516,
+    "actual_size_bytes": 45908036.0,
+    "actual_bops_gbops": 24857.391661056,
+    "is_pareto_improvement": false,
+    "ap_delta": -0.07776034512312524,
+    "allocation_log": [
+      {
+        "step": 0,
+        "action": "start (all INT8)",
+        "layer_bits": {
+          "0": 8,
+          "1": 8,
+          "2": 8,
+          "3": 8,
+          "4": 8,
+          "5": 8,
+          "6": 8,
+          "7": 8
+        },
+        "size_bytes": 60066884.0,
+        "size_mb": 57.284244537353516,
+        "estimated_ap_cost": 0.0
+      },
+      {
+        "step": 1,
+        "action": "layer 6: INT8 -> INT4",
+        "layer_demoted": 6,
+        "ap_cost_individual": 0.011320641300393453,
+        "estimated_total_ap_cost": 0.011320641300393453,
+        "bytes_saved": 3539712.0,
+        "efficiency": 3.198181462331809e-09,
+        "layer_bits": {
+          "0": 8,
+          "1": 8,
+          "2": 8,
+          "3": 8,
+          "4": 8,
+          "5": 8,
+          "6": 4,
+          "7": 8
+        },
+        "size_bytes": 56527172.0,
+        "size_mb": 53.908512115478516
+      },
+      {
+        "step": 2,
+        "action": "layer 7: INT8 -> INT4",
+        "layer_demoted": 7,
+        "ap_cost_individual": 0.017735020132296775,
+        "estimated_total_ap_cost": 0.029055661432690227,
+        "bytes_saved": 3539712.0,
+        "efficiency": 5.010300310391573e-09,
+        "layer_bits": {
+          "0": 8,
+          "1": 8,
+          "2": 8,
+          "3": 8,
+          "4": 8,
+          "5": 8,
+          "6": 4,
+          "7": 4
+        },
+        "size_bytes": 52987460.0,
+        "size_mb": 50.532779693603516
+      },
+      {
+        "step": 3,
+        "action": "layer 5: INT8 -> INT4",
+        "layer_demoted": 5,
+        "ap_cost_individual": 0.02111874714027384,
+        "estimated_total_ap_cost": 0.05017440857296407,
+        "bytes_saved": 3539712.0,
+        "efficiency": 5.966233168199515e-09,
+        "layer_bits": {
+          "0": 8,
+          "1": 8,
+          "2": 8,
+          "3": 8,
+          "4": 8,
+          "5": 4,
+          "6": 4,
+          "7": 4
+        },
+        "size_bytes": 49447748.0,
+        "size_mb": 47.157047271728516
+      },
+      {
+        "step": 4,
+        "action": "layer 1: INT8 -> INT4",
+        "layer_demoted": 1,
+        "ap_cost_individual": 0.026293317499488045,
+        "estimated_total_ap_cost": 0.07646772607245211,
+        "bytes_saved": 3539712.0,
+        "efficiency": 7.428095138668921e-09,
+        "layer_bits": {
+          "0": 8,
+          "1": 4,
+          "2": 8,
+          "3": 8,
+          "4": 8,
+          "5": 4,
+          "6": 4,
+          "7": 4
+        },
+        "size_bytes": 45908036.0,
+        "size_mb": 43.781314849853516
+      }
+    ],
+    "metrics": {
+      "AP": 0.6283131775001574,
+      "AP50": 0.8908062381759472,
+      "AP75": 0.7011379838378867,
+      "APM": 0.6035956851390141,
+      "APL": 0.666964599030734,
+      "AR": 0.6683564231738035,
+      "AR50": 0.9006612090680101,
+      "AR75": 0.7367758186397985,
+      "ARM": 0.6344168260038241,
+      "ARL": 0.718246005202527
+    },
+    "eval_time_seconds": 32.8
+  },
+  "depth6_to_depth4": {
+    "deeper_depth": 6,
+    "shallower_depth": 4,
+    "target_size_mb": 30.310611724853516,
+    "target_size_bytes": 31782980.0,
+    "target_ap": 0.6091258280944167,
+    "target_bops": 23929.67872512,
+    "config": {
+      "0": 8,
+      "1": 4,
+      "2": 8,
+      "3": 4,
+      "4": 4,
+      "5": 4
+    },
+    "config_str": "[8,4,8,4,4,4]",
+    "actual_size_mb": 30.278385162353516,
+    "actual_size_bytes": 31749188.0,
+    "actual_bops_gbops": 24045.642842112,
+    "is_pareto_improvement": false,
+    "ap_delta": -0.3209539692699335,
+    "allocation_log": [
+      {
+        "step": 0,
+        "action": "start (all INT8)",
+        "layer_bits": {
+          "0": 8,
+          "1": 8,
+          "2": 8,
+          "3": 8,
+          "4": 8,
+          "5": 8
+        },
+        "size_bytes": 45908036.0,
+        "size_mb": 43.781314849853516,
+        "estimated_ap_cost": 0.0
+      },
+      {
+        "step": 1,
+        "action": "layer 5: INT8 -> INT4",
+        "layer_demoted": 5,
+        "ap_cost_individual": 0.02893850157862443,
+        "estimated_total_ap_cost": 0.02893850157862443,
+        "bytes_saved": 3539712.0,
+        "efficiency": 8.175383075974665e-09,
+        "layer_bits": {
+          "0": 8,
+          "1": 8,
+          "2": 8,
+          "3": 8,
+          "4": 8,
+          "5": 4
+        },
+        "size_bytes": 42368324.0,
+        "size_mb": 40.405582427978516
+      },
+      {
+        "step": 2,
+        "action": "layer 4: INT8 -> INT4",
+        "layer_demoted": 4,
+        "ap_cost_individual": 0.031651679503051144,
+        "estimated_total_ap_cost": 0.060590181081675576,
+        "bytes_saved": 3539712.0,
+        "efficiency": 8.94187987696489e-09,
+        "layer_bits": {
+          "0": 8,
+          "1": 8,
+          "2": 8,
+          "3": 8,
+          "4": 4,
+          "5": 4
+        },
+        "size_bytes": 38828612.0,
+        "size_mb": 37.029850006103516
+      },
+      {
+        "step": 3,
+        "action": "layer 3: INT8 -> INT4",
+        "layer_demoted": 3,
+        "ap_cost_individual": 0.07643422179542358,
+        "estimated_total_ap_cost": 0.13702440287709916,
+        "bytes_saved": 3539712.0,
+        "efficiency": 2.159334482450086e-08,
+        "layer_bits": {
+          "0": 8,
+          "1": 8,
+          "2": 8,
+          "3": 4,
+          "4": 4,
+          "5": 4
+        },
+        "size_bytes": 35288900.0,
+        "size_mb": 33.654117584228516
+      },
+      {
+        "step": 4,
+        "action": "layer 1: INT8 -> INT4",
+        "layer_demoted": 1,
+        "ap_cost_individual": 0.1287121268983934,
+        "estimated_total_ap_cost": 0.26573652977549256,
+        "bytes_saved": 3539712.0,
+        "efficiency": 3.636231617103126e-08,
+        "layer_bits": {
+          "0": 8,
+          "1": 4,
+          "2": 8,
+          "3": 4,
+          "4": 4,
+          "5": 4
+        },
+        "size_bytes": 31749188.0,
+        "size_mb": 30.278385162353516
+      }
+    ],
+    "metrics": {
+      "AP": 0.2881718588244832,
+      "AP50": 0.6156020407761811,
+      "AP75": 0.23609533064060723,
+      "APM": 0.2753230869151635,
+      "APL": 0.3091711346247542,
+      "AR": 0.3291089420654912,
+      "AR50": 0.6467254408060453,
+      "AR75": 0.2978589420654912,
+      "ARM": 0.30600928708003283,
+      "ARL": 0.36157562244518765
+    },
+    "eval_time_seconds": 26.9
+  },
+  "depth4_to_depth3": {
+    "deeper_depth": 4,
+    "shallower_depth": 3,
+    "target_size_mb": 23.551090240478516,
+    "target_size_bytes": 24695108.0,
+    "target_ap": 0.474303595178386,
+    "target_bops": 23523.804315648,
+    "config": {
+      "0": 8,
+      "1": 8,
+      "2": 4,
+      "3": 4
+    },
+    "config_str": "[8,8,4,4]",
+    "actual_size_mb": 23.526920318603516,
+    "actual_size_bytes": 24669764.0,
+    "actual_bops_gbops": 23581.786374144,
+    "is_pareto_improvement": false,
+    "ap_delta": -0.2574325234735605,
+    "allocation_log": [
+      {
+        "step": 0,
+        "action": "start (all INT8)",
+        "layer_bits": {
+          "0": 8,
+          "1": 8,
+          "2": 8,
+          "3": 8
+        },
+        "size_bytes": 31749188.0,
+        "size_mb": 30.278385162353516,
+        "estimated_ap_cost": 0.0
+      },
+      {
+        "step": 1,
+        "action": "layer 3: INT8 -> INT4",
+        "layer_demoted": 3,
+        "ap_cost_individual": 0.1168847800164649,
+        "estimated_total_ap_cost": 0.1168847800164649,
+        "bytes_saved": 3539712.0,
+        "efficiency": 3.3020985892768935e-08,
+        "layer_bits": {
+          "0": 8,
+          "1": 8,
+          "2": 8,
+          "3": 4
+        },
+        "size_bytes": 28209476.0,
+        "size_mb": 26.902652740478516
+      },
+      {
+        "step": 2,
+        "action": "layer 2: INT8 -> INT4",
+        "layer_demoted": 2,
+        "ap_cost_individual": 0.1910974118139671,
+        "estimated_total_ap_cost": 0.307982191830432,
+        "bytes_saved": 3539712.0,
+        "efficiency": 5.398671186072966e-08,
+        "layer_bits": {
+          "0": 8,
+          "1": 8,
+          "2": 4,
+          "3": 4
+        },
+        "size_bytes": 24669764.0,
+        "size_mb": 23.526920318603516
+      }
+    ],
+    "metrics": {
+      "AP": 0.21687107170482547,
+      "AP50": 0.5905954065401303,
+      "AP75": 0.10255974423059785,
+      "APM": 0.202367570737719,
+      "APL": 0.24321364519430388,
+      "AR": 0.2671284634760705,
+      "AR50": 0.6335012594458438,
+      "AR75": 0.18104534005037784,
+      "ARM": 0.24291177273968861,
+      "ARL": 0.30089186176142696
+    },
+    "eval_time_seconds": 20.9
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "depth_3": {
+    "fp32": {
+      "total_gbops": 4505.68912896,
+      "total_bops": 4505689128960
+    },
+    "int8": {
+      "total_gbops": 1374.657970176,
+      "total_bops": 1374657970176
+    },
+    "int4": {
+      "total_gbops": 852.819443712,
+      "total_bops": 852819443712
+    }
+  },
+  "depth_4": {
+    "fp32": {
+      "total_gbops": 5955.24059136,
+      "total_bops": 5955240591360
+    },
+    "int8": {
+      "total_gbops": 1780.532379648,
+      "total_bops": 1780532379648
+    },
+    "int4": {
+      "total_gbops": 1084.747677696,
+      "total_bops": 1084747677696
+    }
+  },
+  "depth_6": {
+    "fp32": {
+      "total_gbops": 8854.34351616,
+      "total_bops": 8854343516160
+    },
+    "int8": {
+      "total_gbops": 2592.281198592,
+      "total_bops": 2592281198592
+    },
+    "int4": {
+      "total_gbops": 1548.604145664,
+      "total_bops": 1548604145664
+    }
+  },
+  "depth_8": {
+    "fp32": {
+      "total_gbops": 11753.44644096,
+      "total_bops": 11753446440960
+    },
+    "int8": {
+      "total_gbops": 3404.030017536,
+      "total_bops": 3404030017536
+    },
+    "int4": {
+      "total_gbops": 2012.460613632,
+      "total_bops": 2012460613632
+    }
+  },
+  "depth_10": {
+    "fp32": {
+      "total_gbops": 14652.54936576,
+      "total_bops": 14652549365760
+    },
+    "int8": {
+      "total_gbops": 4215.77883648,
+      "total_bops": 4215778836480
+    },
+    "int4": {
+      "total_gbops": 2476.3170816,
+      "total_bops": 2476317081600
+    }
+  },
+  "depth_12": {
+    "fp32": {
+      "total_gbops": 17551.65229056,
+      "total_bops": 17551652290560
+    },
+    "int8": {
+      "total_gbops": 5027.527655424,
+      "total_bops": 5027527655424
+    },
+    "int4": {
+      "total_gbops": 2940.173549568,
+      "total_bops": 2940173549568
+    }
+  }
+}

@@ -180,9 +180,9 @@ def main():
                      7: 7,
                      8: 9,
                      9: 11}
-    lrs = [1e-5, 3e-5, 1e-4, 3e-4, 1e-3, 3e-3]
-    alpha = 1.0
-    beta = 0.5
+    lrs = [1e-4, 2e-4, 3e-4]
+    alpha = 0.9
+    beta = 0.1
     batch_size = 64
     epochs = 1
 

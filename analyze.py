@@ -16,7 +16,7 @@ import pandas as pd
 
 def load_metrics(run_dir: Path) -> pd.DataFrame:
     """Load metrics.jsonl into a DataFrame."""
-    metrics_file = run_dir / 'metrics.jsonl'
+    metrics_file = run_dir / 'depth_6/metrics.jsonl'
     if not metrics_file.exists():
         return pd.DataFrame()
     
@@ -24,7 +24,6 @@ def load_metrics(run_dir: Path) -> pd.DataFrame:
     with open(metrics_file) as f:
         for line in f:
             records.append(json.loads(line))
-    
     return pd.DataFrame(records)
 
 

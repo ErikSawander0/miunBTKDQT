@@ -1,0 +1,12 @@
+numpy<2
+scipy
+matplotlib
+pandas
+tqdm
+pillow
+timm==0.9.12
+einops
+tensorboard
+transformers
+albumentations
+pycocotools
